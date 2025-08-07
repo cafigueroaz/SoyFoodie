@@ -2,7 +2,7 @@
   backdrop-filter: blur(10px);
 }
 
-/* Grid Hero---------------------------------------------------------- */
+/* Grid Hero--------------------------------------------------
 
 .hero-grid {
   display: grid;
@@ -20,18 +20,28 @@
 
 .seccion-hero-2 {
   grid-area: 1 / 2 / 3 / 3;
-}
+}-------- */
 
 /* tamaños videos Hero */
 
+.tamaño-contenedor {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px;
+}
+
 .tamaño-uno {
+  scroll-snap-align: start;
   height: 230px;
 }
 .tamaño-dos {
+  scroll-snap-align: start;
   height: 320px;
 }
 
 .tamaño-tres {
+  scroll-snap-align: start;
   height: 400px;
 }
 .tamaño-cuatro {
@@ -42,4 +52,23 @@
 
 .border-radius {
   border-radius: 10px;
+}
+
+/* header */
+
+.header {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 2 55, 255, 0.6);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+
+  margin: 2vh;
+  z-index: 1030;
+}
+
+.logo {
+  font-size: 1.5rem;
 }
