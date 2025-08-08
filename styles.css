@@ -53,22 +53,3 @@
 .border-radius {
   border-radius: 10px;
 }
-
-/* header */
-
-.header {
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 2 55, 255, 0.6);
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-
-  margin: 2vh;
-  z-index: 1030;
-}
-
-.logo {
-  font-size: 1.5rem;
-}
