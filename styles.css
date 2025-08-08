@@ -53,3 +53,14 @@
 .border-radius {
   border-radius: 10px;
 }
+/*Ordenar titulo Por qué SoyFoodie*/
+
+.ordenarPrimero {
+  order: -1;
+}
+
+@media (min-width: 768px) {
+  .ordenarPrimero {
+    order: 0;
+  }
+}
