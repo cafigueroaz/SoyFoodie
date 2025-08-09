@@ -64,3 +64,41 @@
     order: 0;
   }
 }
+
+/*ajuste cards de Por qué SoyFoodie*/
+
+.ajustes-cards-titular {
+  display: block;
+  padding: 5% 10% 0% 5%;
+  line-height: 1;
+}
+
+.ajustes-cards-referencia {
+  padding: 0 10% 5% 5%;
+}
+
+.tamaño-cards {
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+.centrar-titulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+/*separador*/
+.separador {
+  width: 30%;
+  border: none;
+  height: 2px;
+  background-color: #00000099;
+  margin: 1rem auto;
+}
