@@ -32,16 +32,13 @@
 }
 
 .tamaño-uno {
-  scroll-snap-align: start;
   height: 230px;
 }
 .tamaño-dos {
-  scroll-snap-align: start;
   height: 320px;
 }
 
 .tamaño-tres {
-  scroll-snap-align: start;
   height: 400px;
 }
 .tamaño-cuatro {
