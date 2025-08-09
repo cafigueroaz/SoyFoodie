@@ -19,13 +19,16 @@
     <title>Document</title>
   </head>
 
-  <body class="bg-light text-dark pt-3">
+  <body class="bg-dark text-light pt-3">
     <!-- Header ---------------------------------->
     <nav
-      class="navbar navbar-expand-lg bg-light fixed-top fw-medium fs-6 text-uppercase text-dark m-3 border-radius shadow-lg"
+      class="navbar navbar-dark bg-opacity-75 navbar-expand-lg bg-dark fixed-top fw-medium fs-6 text-uppercase text-light m-3 border-radius shadow-white"
     >
       <div class="container-fluid">
-        <a class="navbar-brand fs-4 fw-bold" href="#SeccionHero">SoyFoodie</a
+        <a
+          class="navbar-brand text-warning fs-4 fw-bold border border-danger border-radius"
+          href="#SeccionHero"
+          >SoyFoodie</a
         ><button
           class="navbar-toggler"
           type="button"
@@ -40,16 +43,20 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#SeccionPorQue">¿Por qué SoyFoodie?</a>
+              <a class="text-light nav-link" href="#SeccionPorQue"
+                >¿Por qué SoyFoodie?</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#SeccionQuePuedesHacer">Descubre</a>
+              <a class="text-light nav-link" href="#SeccionQuePuedesHacer"
+                >Descubre</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#SeccionUnete">Únete</a>
+              <a class="text-light nav-link" href="#SeccionUnete">Únete</a>
             </li>
           </ul>
-          <a href="#Registro" class="btn btn-dark ms-lg-3">🚀 Regístrate</a>
+          <a href="#Registro" class="btn btn-light ms-lg-3">🚀 Regístrate</a>
         </div>
       </div>
     </nav>
@@ -99,11 +106,12 @@
     </section>
 
     <!--Seccion Por qué SoyFoodie-->
+
     <section id="SeccionPorQue">
       <div class="container py-3">
         <div class="row g-2">
           <div class="col-12 col-md-3">
-            <div class="bg-light shadow tamaño-cards">
+            <div class="shadow tamaño-cards contenedor-hover bg-light">
               <a
                 class="ajustes-cards-titular fs-5 fw-bold link-dark link-opacity-75-hover link-underline link-underline-opacity-0"
                 href="https://la.eater.com/2024/10/23/24267295/los-angeles-food-restaurant-culture-tiktok-instagram-social-media-influencers?utm_source"
@@ -132,7 +140,7 @@
           </div>
 
           <div class="col-md-3">
-            <div class="bg-light shadow tamaño-cards">
+            <div class="shadow tamaño-cards contenedor-hover bg-light">
               <a
                 class="ajustes-cards-titular fs-5 fw-bold link-dark link-opacity-75-hover link-underline link-underline-opacity-0"
                 href="https://www.thesun.co.uk/news/36156499/gen-z-meal-inspiration-social-media/?utm_source"
@@ -151,7 +159,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <div class="bg-light shadow tamaño-cards">
+            <div class="shadow tamaño-cards contenedor-hover bg-light">
               <a
                 class="ajustes-cards-titular fs-5 fw-bold link-dark link-opacity-75-hover link-underline link-underline-opacity-0"
                 href="https://revistaempresarial.com/marketing/redes-sociales/colombianos-confian-mas-en-los-influencers-o-en-la-publicidad-tradicional/?utm_source"
@@ -171,7 +179,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <div class="bg-light shadow tamaño-cards">
+            <div class="shadow tamaño-cards contenedor-hover bg-light">
               <a
                 class="ajustes-cards-titular fs-5 fw-bold link-dark link-opacity-75-hover link-underline link-underline-opacity-0"
                 href="https://ahdb.org.uk/news/consumer-insight-the-role-of-social-media-on-gen-z-views-on-food"
@@ -191,7 +199,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <div class="bg-light shadow tamaño-cards">
+            <div class="shadow tamaño-cards contenedor-hover bg-light">
               <a
                 class="ajustes-cards-titular fs-5 fw-bold link-dark link-opacity-75-hover link-underline link-underline-opacity-0"
                 href="https://www.infobae.com/colombia/2025/01/22/colombianos-entre-los-mas-consumidores-de-redes-sociales-en-el-mundo-estos-son-los-influenciadores-y-temas-que-mas-buscan/?utm_source=chatgpt.com"
@@ -212,7 +220,7 @@
           </div>
 
           <div class="col-12 col-md-6">
-            <div class="bg-light shadow tamaño-cards">
+            <div class="shadow tamaño-cards contenedor-hover bg-light">
               <a
                 class="ajustes-cards-titular fs-5 fw-bold link-dark link-opacity-75-hover link-underline link-underline-opacity-0"
                 href="https://universidadeuropea.com/noticias/generacion-z-no-compra-sin-antes-scrollear-informe/?utm"
@@ -235,6 +243,22 @@
         </div>
       </div>
     </section>
+
+    <!--prueba-->
+    <div class="bg-dark text-warning p-3">
+      Texto en amarillo sobre fondo oscuro
+    </div>
+
+    <div class="bg-dark text-danger p-3">Texto en rojo sobre fondo oscuro</div>
+    <div class="bg-dark text-info p-3">
+      Texto en azul brillante sobre fondo oscuro
+    </div>
+    <div class="bg-dark text-success p-3">
+      Texto en verde sobre fondo oscuro
+    </div>
+    <div class="bg-dark border border-warning p-3">
+      Borde amarillo sobre fondo oscuro
+    </div>
 
     <script src="main.js"></script>
   </body>
