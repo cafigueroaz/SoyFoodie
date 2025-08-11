@@ -26,7 +26,7 @@
     >
       <div class="container-fluid">
         <a
-          class="navbar-brand text-warning fs-4 fw-bold border border-danger border-radius"
+          class="navbar-brand text-light fs-4 fw-bold border border-danger border-radius"
           href="#SeccionHero"
           >SoyFoodie</a
         ><button
@@ -48,7 +48,7 @@
               >
             </li>
             <li class="nav-item">
-              <a class="text-light nav-link" href="#SeccionQuePuedesHacer"
+              <a class="text-light nav-link" href="#SeccionDescubre"
                 >Descubre</a
               >
             </li>
@@ -78,7 +78,7 @@
         <!--Videos Hero-->
         <div class="col-12 col-md-6">
           <div
-            class="row flex-nowrap gx-3 align-items-center tamaño-contenedor my-3 overflow-x-hidden overflow-scroll"
+            class="row tamaño-contenedor-seccion flex-nowrap gx-3 align-items-center my-3 overflow-hidden"
           >
             <div class="col tamaño-uno">
               <video class="h-100 border-radius" muted autoplay loop>
@@ -108,7 +108,7 @@
     <!--Seccion Por qué SoyFoodie-->
 
     <section id="SeccionPorQue">
-      <div class="container py-3">
+      <div class="container py-3 tamaño-contenedor-seccion">
         <div class="row g-2">
           <div class="col-12 col-md-3">
             <div class="shadow tamaño-cards contenedor-hover bg-light">
@@ -247,42 +247,74 @@
     <!--Seccion Descubre-->
 
     <section id="SeccionDescubre">
-      <div class="mt-5 row contenedor-descubre">
-        <div class="col-12 col-md-6 align-content-center">
+      <div class="container-fluid tamaño-contenedor-seccion">
+        <div class="row">
           <div
-            class="row card-izq-descubre mb-3 mx-auto justify-content-center"
+            class="col-12 col-md-6 p-1 d-flex flex-column justify-content-center mx-auto"
           >
             <div
-              class="row justify-content-center align-content-end text-center display-6"
+              class="card-izq-descubre mb-3 mx-auto text-center p-3 contenedor"
+              data-id="1"
             >
-              Foodies
+              <h2 class="display-6">Foodies</h2>
+              <p class="lead ocultar-movil">
+                Descubre y guarda experiencias gastronómicas reales, crea tu
+                perfil y comparte tus recomendaciones favoritas.
+              </p>
             </div>
+
             <div
-              class="row row justify-content-center align-content-start text-center lead"
+              class="card-izq-descubre mt-3 mx-auto text-center p-3 contenedor"
+              data-id="2"
             >
-              Descubre y guarda experiencias gastronómicas reales, crea tu
-              perfil y comparte tus recomendaciones favoritas.
+              <h2 class="display-6">Restaurantes</h2>
+              <p class="ocultar-movil lead">
+                Impulsa tu negocio con un perfil dinámico que conecta con
+                clientes reales y destaca lo mejor de tu oferta.
+              </p>
             </div>
           </div>
 
           <div
-            class="row card-izq-descubre mt-3 mx-auto justify-content-center"
+            class="container-fluid col-12 col-md-6 m-auto text-start card-der-descubre bg-gradient align-content-center"
+            id="contenidoMostrado"
           >
-            <div
-              class="row justify-content-center align-content-end text-center display-6"
-            >
-              Restaurantes
-            </div>
-            <div
-              class="row justify-content-center align-content-start text-center lead"
-            >
-              Impulsa tu negocio con un perfil dinámico que conecta con clientes
-              reales y destaca lo mejor de tu oferta.
+            <div class="container py-4">
+              <div class="row justify-content-center fs-1">
+                <div class="col-auto emoji-efecto">🍔</div>
+                <div class="col-auto emoji-efecto">🍕</div>
+                <div class="col-auto emoji-efecto">🍣</div>
+                <div class="col-auto emoji-efecto">🍦</div>
+                <div class="col-auto emoji-efecto">🍩</div>
+              </div>
+              <div class="row justify-content-center fs-1">
+                <div class="col-auto emoji-efecto">🥗</div>
+                <div class="col-auto emoji-efecto">🥩</div>
+                <div class="col-auto emoji-efecto">🌮</div>
+                <div class="col-auto emoji-efecto">🍜</div>
+              </div>
+              <div class="row justify-content-center fs-1">
+                <div class="col-auto emoji-efecto">🍇</div>
+                <div class="col-auto emoji-efecto">🍫</div>
+                <div class="col-auto emoji-efecto fs-3">SoyFoodie</div>
+                <div class="col-auto emoji-efecto">🍤</div>
+                <div class="col-auto emoji-efecto">🥖</div>
+              </div>
+              <div class="row justify-content-center fs-1">
+                <div class="col-auto emoji-efecto">🥞</div>
+                <div class="col-auto emoji-efecto">🧀</div>
+                <div class="col-auto emoji-efecto">🥙</div>
+                <div class="col-auto emoji-efecto">🍪</div>
+              </div>
+              <div class="row justify-content-center fs-1">
+                <div class="col-auto emoji-efecto">🍉</div>
+                <div class="col-auto emoji-efecto">🍋</div>
+                <div class="col-auto emoji-efecto">🥬</div>
+                <div class="col-auto emoji-efecto">🥔</div>
+                <div class="col-auto emoji-efecto">🥕</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-6 card-der-descubre m-auto bg-gradient">
-          Columna 2
         </div>
       </div>
     </section>

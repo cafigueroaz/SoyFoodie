@@ -3,10 +3,10 @@ const mostrar = document.getElementById("contenidoMostrado");
 
 const contenidos = {
   1: `
-    <ul class="list-unstyled lead">
-      <li>🔍 Descubreexperiencias reales cerca de ti con recomendaciones auténticas.</li>
+    <ul class="list-unstyled lead fs-5">
+      <li>🔍 Descubre experiencias reales cerca de ti con recomendaciones auténticas.</li>
       <li>👤 Crea y personaliza tu perfil foodie para mostrar tus gustos.</li>
-      <li>📤Compartetus recomendaciones con amigos y la comunidad.</li>
+      <li>📤Comparte tus recomendaciones con amigos y la comunidad.</li>
       <li>⭐ Evalúa y comenta para ayudar a otros foodies a elegir bien.</li>
     </ul>
   `,
@@ -39,7 +39,7 @@ const emojisHTML = `
   <div class="row g-3 justify-content-center fs-1">
     <div class="col-auto emoji-efecto">🍇</div>
     <div class="col-auto emoji-efecto">🍫</div>
-    <div class="col-auto emoji-efecto">SoyFoodie</div>
+    <div class="col-auto emoji-efecto fs-3">SoyFoodie</div>
     <div class="col-auto emoji-efecto">🍤</div>
     <div class="col-auto emoji-efecto">🥖</div>
   </div>

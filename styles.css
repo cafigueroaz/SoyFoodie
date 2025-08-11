@@ -2,16 +2,13 @@
   backdrop-filter: blur(10px);
 }
 
+/* * {
+  outline: 1px solid red !important;
+} */
+
 /* Grid Hero--------------------------------------------------
 
  */
-
-.tamaño-contenedor {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 10px;
-}
 
 .tamaño-uno {
   height: 230px;
@@ -57,12 +54,18 @@
 }
 
 .tamaño-cards {
-  height: 25vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: left;
+}
+
+@media (min-width: 768px) {
+  .tamaño-cards {
+    height: 25vh;
+  }
 }
 
 .centrar-titulo {
@@ -118,28 +121,62 @@
 .bg-gradient-animado {
   background: linear-gradient(-45deg, #343a40, #0d6efd, #6610f2, #20c997);
   background-size: 400% 400%;
-  transition: ;
 }
 
 /*ajuste cards de Descubre*/
 
-.contenedor-descubre {
-  height: 80vh;
-  margin: 20vh;
+.tamaño-contenedor-seccion {
+  height: auto;
+  width: 100%;
+  margin-bottom: 10%;
 }
-.card-izq-descubre {
-  height: 43%;
-  width: 90%;
-  border-radius: 15px;
-  border: 2px solid #4543439e;
-}
+
+.card-izq-descubre,
 .card-der-descubre {
   border-radius: 15px;
-  height: 90%;
-  width: 45%;
+}
+
+.card-izq-descubre {
+  border: 2px solid #4543439e;
+  height: auto;
+  width: 90%;
+  margin-bottom: 2vh;
+  transition: border 0.5s ease;
 }
 
 .card-izq-descubre:hover {
-  border: 1px solid #ef0000;
-  transition: border 0.5s ease;
+  border-color: #ef0000;
 }
+
+.card-der-descubre {
+  height: 400px;
+  width: 90%;
+}
+
+.emoji-efecto {
+  transition: transform 0.5s ease-out;
+}
+
+.emoji-efecto:hover {
+  transform: scale(1.5);
+}
+.ocultar-movil {
+  display: none;
+}
+@media (min-width: 768px) {
+  .card-der-descubre {
+    width: 45%;
+  }
+  .card-izq-descubre {
+    height: 43%;
+  }
+  .tamaño-contenedor-seccion {
+    height: 90vh;
+  }
+
+  .ocultar-movil {
+    display: block;
+  }
+}
+
+/*prueba*/
