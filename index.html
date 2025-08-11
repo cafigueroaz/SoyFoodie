@@ -52,26 +52,29 @@
                 >Descubre</a
               >
             </li>
-            <li class="nav-item">
-              <a class="text-light nav-link" href="#SeccionUnete">Únete</a>
-            </li>
           </ul>
-          <a href="#Registro" class="btn btn-light ms-lg-3">🚀 Regístrate</a>
+          <button
+            class="btn btn-light boton-gradient ms-lg-3 border-0"
+            data-bs-toggle="modal"
+            data-bs-target="#Registro"
+          >
+            🚀 Regístrate
+          </button>
         </div>
       </div>
     </nav>
 
     <!-- Hero ------------------------------------>
     <section id="SeccionHero">
-      <div class="row g-2 justify-content-center align-items-center">
+      <div class="row justify-content-center align-items-center">
         <!--Texto hero-->
         <div class="col-12 col-md-6">
           <div class="row text-center pt-5 px-5 mt-5">
             <h1>Descubre, guarda y presume lo que comes. 🍔</h1>
           </div>
-          <div class="row lead text-center mx-3">
+          <div class="row lead text-center mx-3 px-5">
             Explora experiencias reales de comida cerca de ti, guarda tus
-            favoritos y crea tu perfil foodie. Todo en una sola plataforma.
+            favoritos y crea tu perfil foodie.
           </div>
         </div>
 
@@ -108,7 +111,7 @@
     <!--Seccion Por qué SoyFoodie-->
 
     <section id="SeccionPorQue">
-      <div class="container py-3 tamaño-contenedor-seccion">
+      <div class="container d-grid tamaño-contenedor-seccion-porque">
         <div class="row g-2">
           <div class="col-12 col-md-3">
             <div class="shadow tamaño-cards contenedor-hover bg-light">
@@ -247,7 +250,7 @@
     <!--Seccion Descubre-->
 
     <section id="SeccionDescubre">
-      <div class="container-fluid tamaño-contenedor-seccion">
+      <div class="container-fluid tamaño-contenedor-seccion d-grid">
         <div class="row">
           <div
             class="col-12 col-md-6 p-1 d-flex flex-column justify-content-center mx-auto"
@@ -276,7 +279,7 @@
           </div>
 
           <div
-            class="container-fluid col-12 col-md-6 m-auto text-start card-der-descubre bg-gradient align-content-center"
+            class="col-12 col-md-6 m-auto text-start card-der-descubre bg-gradient align-content-center"
             id="contenidoMostrado"
           >
             <div class="container py-4">
@@ -318,6 +321,67 @@
         </div>
       </div>
     </section>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="Registro"
+      tabindex="-1"
+      aria-labelledby="tituloModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tituloModal">Título del Modal</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Aquí va el contenido del modal, como texto, imágenes o formularios.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button type="button" class="btn btn-primary">
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+
+    <footer class="footer-gradient text-light py-5">
+      <div class="container text-center">
+        <h3 class="mb-3">SoyFoodie</h3>
+        <p class="mb-4 fs-6">
+          Descubre, guarda y presume lo que comes. Explora experiencias reales
+          cerca de ti.
+        </p>
+        <div class="mb-4">
+          <span class="text-light me-3">contacto@soyfoodie.com</span>
+          <span> | </span>
+          <span class="text-light ms-3">+57 301 529 5635</span>
+        </div>
+        <div class="mb-4">
+          <a href="#" class="text-light fs-4 mx-2" aria-label="Facebook">📘</a>
+          <a href="#" class="text-light fs-4 mx-2" aria-label="Instagram">📸</a>
+          <a href="#" class="text-light fs-4 mx-2" aria-label="Twitter">🐦</a>
+        </div>
+        <small>© 2025 SoyFoodie. Todos los derechos reservados.</small>
+      </div>
+    </footer>
 
     <script src="main.js"></script>
   </body>

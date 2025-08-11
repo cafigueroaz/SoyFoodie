@@ -1,3 +1,5 @@
+// Animación Descubre
+
 const contenedores = document.querySelectorAll(".contenedor");
 const mostrar = document.getElementById("contenidoMostrado");
 
@@ -16,7 +18,6 @@ const contenidos = {
       <li>📝 Actualiza información clave como ubicación, horario y menú.</li>
       <li>📊 Panel de estadísticaspara ver vistas, guardados y menciones.</li>
       <li>🏷️ Etiquetas especiales para destacar características (Pet Friendly, Vegano, etc.).</li>
-      <li>❌ Sin integración con Uber Eats para enfocarse en la experiencia local directa.</li>
     </ul>
   `,
 };

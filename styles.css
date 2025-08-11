@@ -42,6 +42,19 @@
 }
 
 /*ajuste cards de Por qué SoyFoodie*/
+.tamaño-contenedor-seccion-porque {
+  margin: auto;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .tamaño-contenedor-seccion-porque {
+    height: 90vh;
+    padding-top: 15vh;
+  }
+}
 
 .ajustes-cards-titular {
   display: block;
@@ -94,7 +107,7 @@
 .contenedor-hover:hover {
   transform: scale(1.03);
   border-radius: 10px;
-  background: linear-gradient(135deg, #ff0033, #ff4d4d);
+  background: linear-gradient(135deg, #ff0033, #f4714c);
 }
 
 .shadow-white {
@@ -118,17 +131,14 @@
   transform: scale(1.08);
 }
 
-.bg-gradient-animado {
-  background: linear-gradient(-45deg, #343a40, #0d6efd, #6610f2, #20c997);
-  background-size: 400% 400%;
-}
-
 /*ajuste cards de Descubre*/
 
 .tamaño-contenedor-seccion {
-  height: auto;
-  width: 100%;
-  margin-bottom: 10%;
+  height: 110vh;
+  margin: auto;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
 }
 
 .card-izq-descubre,
@@ -165,7 +175,7 @@
 }
 @media (min-width: 768px) {
   .card-der-descubre {
-    width: 45%;
+    width: 40vw;
   }
   .card-izq-descubre {
     height: 43%;
@@ -175,8 +185,42 @@
   }
 
   .ocultar-movil {
-    display: block;
+    display: grid;
   }
 }
 
-/*prueba*/
+/*footer*/
+
+.footer-gradient {
+  background: linear-gradient(135deg, #d32f2f, #fbc02d);
+  background-size: 400% 400%;
+  animation: gradientAnimationBoton 20s ease infinite;
+}
+.boton-gradient {
+  background: linear-gradient(135deg, #d32f2f, #ffffff, #fbc02d);
+  background-size: 600% 600%;
+  animation: gradientAnimationFooter 30s ease infinite;
+}
+
+@keyframes gradientAnimationFooter {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradientAnimationBoton {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
