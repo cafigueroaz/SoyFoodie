@@ -9,7 +9,12 @@
 /* Grid Hero--------------------------------------------------
 
  */
-
+.text-light-resgistro {
+  color: #ffffff;
+}
+.text-light-resgistro:hover {
+  color: #c51818;
+}
 .tamaño-uno {
   height: 230px;
 }
@@ -58,12 +63,12 @@
 
 .ajustes-cards-titular {
   display: block;
-  padding: 5% 10% 0% 5%;
+  padding-top: 5%;
   line-height: 1;
 }
 
 .ajustes-cards-referencia {
-  padding: 0 10% 5% 5%;
+  padding-bottom: 5%;
 }
 
 .tamaño-cards {
@@ -105,9 +110,9 @@
 }
 
 .contenedor-hover:hover {
-  transform: scale(1.03);
+  transform: scale(1.04);
   border-radius: 10px;
-  background: linear-gradient(135deg, #ff0033, #f4714c);
+  background: linear-gradient(135deg, #c51818, #f4714c);
 }
 
 .shadow-white {
@@ -120,7 +125,7 @@
 }
 .link-dark:hover {
   color: #ffffff !important;
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 .navbar-brand {
   transition: color 0.3s ease, transform 0.3s ease;
@@ -194,15 +199,16 @@
 .footer-gradient {
   background: linear-gradient(135deg, #d32f2f, #fbc02d);
   background-size: 400% 400%;
-  animation: gradientAnimationBoton 20s ease infinite;
+  animation: gradientAnimation 20s ease infinite;
 }
+
 .boton-gradient {
   background: linear-gradient(135deg, #d32f2f, #ffffff, #fbc02d);
   background-size: 600% 600%;
-  animation: gradientAnimationFooter 30s ease infinite;
+  animation: gradientAnimation 30s ease infinite;
 }
 
-@keyframes gradientAnimationFooter {
+@keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
   }
@@ -213,14 +219,14 @@
     background-position: 0% 50%;
   }
 }
-@keyframes gradientAnimationBoton {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+
+.iconos {
+  padding-left: 2vh;
+  padding-right: 2vh;
+  font-size: xx-large;
+  color: aliceblue;
+}
+
+.iconos:hover {
+  color: #c51818;
 }
