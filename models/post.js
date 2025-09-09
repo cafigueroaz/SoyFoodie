@@ -12,7 +12,7 @@ const postSchema = new Schema(
       required: true,
     },
 
-    comentario: { type: String },
+    comentario: { type: String, default: "Sin comentarios" },
     calificacion: { type: Number, min: 1, max: 5, required: true },
     // likes: [{ type: Schema.Types.ObjectId, ref: "Usuario" }],
     // guardados: [{ type: Schema.Types.ObjectId, ref: "Usuario" }],

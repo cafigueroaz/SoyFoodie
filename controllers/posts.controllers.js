@@ -24,8 +24,14 @@ export const crearPost = async (req, res) => {
         calificacion,
       });
 
-      usuario.posts.push(nuevoPost_.id);
-      return res.status(201).json(nuevoPost);
+      usuario.posts.push(nuevoPost._id);
+      await usuario.save();
+
+      return res.status(201).json({
+        mensaje:
+          "¡Tu experiencia fue servida con éxito! 🎉🍽️ Gracias por compartir en SoyFoodie.",
+        nuevoPost,
+      });
     } else {
       return res
         .status(404)
