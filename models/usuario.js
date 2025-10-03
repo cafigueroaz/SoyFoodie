@@ -1,27 +1,32 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
+import baseSchema from "./User.base.js";
 
-const usuarioSchema = new Schema(
-  {
-    nombre: { type: String, required: true },
-    nickname: { type: String, required: true, lowercase: true, unique: true },
-    correo: { type: String, required: true, unique: true, lowercase: true },
-    contraseña: { type: String, required: true },
-    rol: {
-      type: String,
-      enum: ["foodie", "restautante", "admin"],
-      default: "foodie",
-    },
-    // fotoPerfil????
-    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    favoritos: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-    restaurantesGuardados: [
-      { type: Schema.Types.ObjectId, ref: "Restaurante" },
-    ],
-  },
-  { timestamps: true }
+const UserBase = mongoose.model("Usuario", baseSchema, "usuarios");
+
+const restauranteSchema = new mongoose.Schema({
+  direccion: { type: String, required: true },
+  horario: { type: String },
+  etiquetas: [{ type: String }],
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+});
+export const restauranteUsuario = UserBase.discriminator(
+  "restaurante",
+  restauranteSchema
 );
 
-const Usuario = mongoose.model("Usuario", usuarioSchema, "usuarios");
+const adminSchema = new mongoose.Schema({
+  permisos: [{ type: String }], // ej. ['manage_users', 'manage_products']
+  adminNotes: { type: String },
+});
+export const adminUsuario = UserBase.discriminator("admin", adminSchema);
 
-export default Usuario;
+const foodieSchema = new mongoose.Schema({
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  favoritos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  restaurantesGuardados: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Restaurante" },
+  ],
+});
+export const foodieUsuario = UserBase.discriminator("foodie", foodieSchema);
+
+export default UserBase;

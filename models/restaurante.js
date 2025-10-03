@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const restauranteSchema = new Schema(
   {
-    nombre: { type: String, required: true },
+    restaurante: { type: String, required: true, lowercase: true },
     direccion: { type: String, required: true },
     horario: { type: String },
     etiquetas: [{ type: String }],

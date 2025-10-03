@@ -4,7 +4,9 @@ import {
   crearUsuario,
   actualizarUsuario,
   eliminarUsuario,
-  usuarioPostea,
+  usuarioNuevoPost,
+  usuarioPosts,
+  restaurantePosts,
 } from "../controllers/usuarios.controllers.js";
 
 const router = express.Router();
@@ -14,7 +16,12 @@ router.post("/", crearUsuario); // POST /usuarios
 router.put("/", actualizarUsuario); // PUT /usuarios/nickname o correo
 router.delete("/", eliminarUsuario); // DELETE /usuarios/nickname o correo
 
-// Crear POST
-router.post("/post/", usuarioPostea);
+//  POST
+router.post("/post/add", usuarioNuevoPost);
+router.get("/post/:nickname", usuarioPosts); //Se obtienen los post de un usuario
+
+// Restaurante
+
+router.get("/restaurante/:restaurante", restaurantePosts); //Se obtienen los post de un restaurante
 
 export default router;

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/1000855649/SoyFoodie#readme",
   "dependencies": {
     "express": "^5.1.0",
+    "fuse.js": "^7.1.0",
     "mongoose": "^8.18.0"
   },
   "devDependencies": {

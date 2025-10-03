@@ -1,5 +1,10 @@
 import User from "../models/usuario.js"; // tu modelo mongoose
-import { crearPost } from "../controllers/posts.controllers.js";
+import {
+  crearPost,
+  getPostsporUsuario,
+} from "../controllers/posts.controllers.js";
+
+import { getPostsporRestaurante } from "../controllers/restaurantes.controllers.js";
 
 /** GET /usuarios/nickname o correo */
 export const getUsuario = async (req, res) => {
@@ -27,6 +32,7 @@ export const getUsuario = async (req, res) => {
       return res
         .status(404)
         .json({ error: "No encontramos a este foodie en la mesa." });
+
     return res.json(usuario);
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -144,9 +150,27 @@ export const eliminarUsuario = async (req, res) => {
 
 // Controles postear publicaciones //
 
-export const usuarioPostea = async (req, res) => {
+export const usuarioNuevoPost = async (req, res) => {
   try {
     return crearPost(req, res);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+export const usuarioPosts = async (req, res) => {
+  try {
+    return getPostsporUsuario(req, res);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+// Controles Restaurantes
+
+export const restaurantePosts = async (req, res) => {
+  try {
+    return getPostsporRestaurante(req, res);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

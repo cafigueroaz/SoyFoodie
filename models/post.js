@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const postSchema = new Schema(
   {
     nickname: { type: String, required: true, lowercase: true },
-    lugar: { type: String, required: true, lowercase: true },
+    restaurante: { type: String, required: true, lowercase: true },
     tipo: {
       type: String,
       enum: ["video", "foto", "reseña"],
