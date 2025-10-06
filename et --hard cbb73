@@ -1,0 +1,17 @@
+[33mebf1d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Primera prueba jwt
+[33mcbb73[m  actualizacion
+[33m569bd[m Se publica post y se guarda a cada usuario
+[33m9229d[m Se modifico los controladores CRUD para los usuarios. Tambien se creo el controlador para crear POST verificando que el usuario exitas. En proceso de agregarlo como objeto al documento de usuario
+[33m05618[m Se ordenan ficheros y directorios
+[33mad3c5[m Finaliza form para registro
+[33mb763b[m  secciones1,2y3 listas. Inicio de seccion de registro con modal
+[33m7b1f2[m Seccion 3 lista
+[33md40a0[m Guardar main.js
+[33m66394[m Estructura seccion 3
+[33m31526[m Mejorar estilos
+[33mf87dc[m Correcciones de estilo al navbar
+[33m31d6d[m Seccion 2 al 70%.
+[33md740c[m Se agrega seccion 2 con grid responsive. falta contenido
+[33me2211[m Header casi listo para celular.
+[33m4f020[m  Hero responsive
+[33ma85c6[m Nuevo inicio. Hero listo. En proceso del header

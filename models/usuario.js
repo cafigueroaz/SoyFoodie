@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import baseSchema from "./User.base.js";
+import baseSchema from "./usuario.base.js";
 
 const UserBase = mongoose.model("Usuario", baseSchema, "usuarios");
 
@@ -15,7 +15,7 @@ export const restauranteUsuario = UserBase.discriminator(
 );
 
 const adminSchema = new mongoose.Schema({
-  permisos: [{ type: String }], // ej. ['manage_users', 'manage_products']
+  permisos: [{ type: String }], // ej. ['manage_users',   'manage_products']
   adminNotes: { type: String },
 });
 export const adminUsuario = UserBase.discriminator("admin", adminSchema);
@@ -26,6 +26,7 @@ const foodieSchema = new mongoose.Schema({
   restaurantesGuardados: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Restaurante" },
   ],
+  edad: { type: Number, required: true },
 });
 export const foodieUsuario = UserBase.discriminator("foodie", foodieSchema);
 

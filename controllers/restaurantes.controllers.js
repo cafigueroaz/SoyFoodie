@@ -1,12 +1,12 @@
 import Post from "../models/post.js";
 import Usuario from "../models/usuario.js";
-import Restaurante from "../models/restaurante.js";
+import restauranteUsuario from "../models/usuario.js";
 
 export const getPostsporRestaurante = async (req, res) => {
   try {
     const { restaurante } = req.params;
 
-    let restauranteBuscado = await Restaurante.findOne({
+    let restauranteBuscado = await restauranteUsuario.findOne({
       restaurante: new RegExp(restaurante, "i"),
     });
 

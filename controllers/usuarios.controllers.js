@@ -6,15 +6,14 @@ import {
 
 import { getPostsporRestaurante } from "../controllers/restaurantes.controllers.js";
 
-/** GET /usuarios/nickname o correo */
+/** GET /usuarios/nickname o email */
 export const getUsuario = async (req, res) => {
   try {
-    const { nickname, correo } = req.query;
+    const { nickname, email } = req.query;
 
-    if (!nickname && !correo) {
+    if (!nickname && !email) {
       return res.status(400).json({
-        mensaje:
-          "Debes enviar un nickname o correo para encontrar a tu foodie.",
+        mensaje: "Debes enviar un nickname o email para encontrar a tu foodie.",
       });
     }
 
@@ -24,8 +23,8 @@ export const getUsuario = async (req, res) => {
       usuario = await User.findOne({
         nickname: nickname,
       });
-    } else if (correo) {
-      usuario = await User.findOne({ correo: correo });
+    } else if (email) {
+      usuario = await User.findOne({ email: email });
     }
 
     if (!usuario)
@@ -41,22 +40,22 @@ export const getUsuario = async (req, res) => {
 
 export const crearUsuario = async (req, res) => {
   try {
-    const { nombre, nickname, correo, contraseña, rol } = req.body;
+    const { nombre, nickname, email, password, rol } = req.body;
 
-    if (!nombre || !nickname || !correo || !contraseña) {
+    if (!nombre || !nickname || !email || !password) {
       return res.status(400).json({
         mensaje:
-          "Receta incompleta: nombre, nickname, correo y contraseña son obligatorios.",
+          "Receta incompleta: nombre, nickname, email y password son obligatorios.",
       });
     }
 
-    const validarCorreo = await User.findOne({ correo });
+    const validarEmail = await User.findOne({ email });
     const validarNickname = await User.findOne({ nickname });
-    if (validarCorreo || validarNickname) {
-      if (validarCorreo) {
+    if (validarEmail || validarNickname) {
+      if (validarEmail) {
         return res
           .status(409)
-          .json({ mensaje: "Ese correo ya está reservado en SoyFoodie." });
+          .json({ mensaje: "Ese email ya está reservado en SoyFoodie." });
       } else if (validarNickname) {
         return res.status(409).json({
           mensaje:
@@ -68,8 +67,8 @@ export const crearUsuario = async (req, res) => {
     const nuevoUsuario = await User.create({
       nombre,
       nickname,
-      correo,
-      contraseña,
+      email,
+      password,
       rol,
     });
     return res.status(201).json(nuevoUsuario);
@@ -80,25 +79,25 @@ export const crearUsuario = async (req, res) => {
 
 export const actualizarUsuario = async (req, res) => {
   try {
-    const { nickname, correo } = req.query;
-    const { nombre, nicknameNuevo, correoNuevo, contraseña, rol } = req.body;
+    const { nickname, email } = req.query;
+    const { nombre, nicknameNuevo, emailNuevo, password, rol } = req.body;
 
-    if (!nickname && !correo) {
+    if (!nickname && !email) {
       return res.status(400).json({
         mensaje:
-          "Debes enviar un nickname o correo para actualizar este perfil.",
+          "Debes enviar un nickname o email para actualizar este perfil.",
       });
     }
 
     const update = {};
     if (nombre !== undefined) update.nombre = nombre;
-    if (correoNuevo !== undefined) update.correo = correoNuevo;
-    if (contraseña !== undefined) update.contraseña = contraseña;
+    if (emailNuevo !== undefined) update.email = emailNuevo;
+    if (password !== undefined) update.password = password;
     if (nicknameNuevo !== undefined) update.nickname = nicknameNuevo;
     if (rol !== undefined) update.rol = rol;
 
     let filtro = {};
-    if (correo) filtro.correo = correo.toLowerCase();
+    if (email) filtro.email = email.toLowerCase();
     if (nickname) filtro.nickname = nickname.toLowerCase();
 
     const usuario = await User.findOneAndUpdate(filtro, update, { new: true });
@@ -121,16 +120,16 @@ export const actualizarUsuario = async (req, res) => {
 /** DELETE /usuarios/:nombre */
 export const eliminarUsuario = async (req, res) => {
   try {
-    const { nickname, correo } = req.query;
+    const { nickname, email } = req.query;
 
-    if (!nickname && !correo) {
+    if (!nickname && !email) {
       return res.status(400).json({
-        mensaje: "Debes enviar un nickname o correo para eliminar un perfil.",
+        mensaje: "Debes enviar un nickname o email para eliminar un perfil.",
       });
     }
 
     let filtro = {};
-    if (correo) filtro.correo = correo.toLowerCase();
+    if (email) filtro.email = email.toLowerCase();
     if (nickname) filtro.nickname = nickname.toLowerCase();
 
     const eliminado = await User.findOneAndDelete(filtro);

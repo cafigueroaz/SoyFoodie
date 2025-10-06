@@ -1,19 +1,24 @@
-import express from "express";
 import mongoose from "mongoose";
-import userRoutes from "./routes/usuarioRoutes.js";
+import app from "./app.js";
 
-mongoose
-  .connect("mongodb://localhost:27017/SoyFoodie")
-  .then(() => console.log("Conectado a MongoDB"))
-  .catch((err) => console.error("Error de conexión", err));
+const { MONGODB_URI, PORT = 10000 } = process.env;
 
-const app = express();
-const PORT = 10000;
+async function main() {
+  try {
+    await mongoose.connect(MONGODB_URI);
+    console.log("Mongo conectado");
+    const server = app.listen(PORT, () =>
+      console.log(`API http://localhost:${PORT}`)
+    );
 
-app.use(express.json());
+    process.on("SIGINT", async () => {
+      await mongoose.connection.close();
+      server.close(() => process.exit(0));
+    });
+  } catch (err) {
+    console.error("Error al iniciar:", err.message);
+    process.exit(1);
+  }
+}
 
-app.use("/user", userRoutes);
-
-app.listen(PORT, () => {
-  console.log(`Servidor eschuchando en http://localhost:${PORT}`);
-});
+main();
