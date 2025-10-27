@@ -60,7 +60,8 @@ export const patchMe = async (req, res, next) => {
   }
 };
 
-/** GET /users/nickname o email */
+//___________________________________________________________________________________________________
+
 export const getUser = async (req, res, next) => {
   try {
     const nickname = req.params.nickname || req.query.nickname;

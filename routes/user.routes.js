@@ -10,6 +10,7 @@ import {
 import {
   getMyPosts,
   getPostsByUserId,
+  interactPost,
 } from "../controllers/post.controller.js";
 import { requireAuth, requireRole } from "../middlewares/auth.js";
 
@@ -30,5 +31,7 @@ router.delete("/:id", requireAuth, requireRole("admin"), adminDelete);
 router.post("/post/add", requireAuth, newUserPost);
 router.get("/post/me", requireAuth, getMyPosts); //mis posts
 router.get("/users/:id/posts", requireAuth, getPostsByUserId); //post de otro usuario por id
+
+router.post("/post/interact", requireAuth, interactPost);
 
 export default router;

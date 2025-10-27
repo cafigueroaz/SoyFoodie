@@ -1,61 +1,112 @@
-import UserModel from "../models/user.js";
+import UserBase, {
+  foodieUser,
+  partnerUser,
+  adminUser,
+} from "../models/user.js";
 import { signToken } from "../lib/jwt.js";
 
-// POST /auth/register
 export const register = async (req, res, next) => {
   try {
-    const { name, nickname, email, password, role, address, age, extras } =
-      req.body;
+    const {
+      name,
+      nickname,
+      email,
+      password,
+      role = "foodie",
+      address,
+      age,
+      extras,
+    } = req.body;
 
-    const emailExists = await UserModel.findOne({ email });
+    // Validar email y nickname
+    const emailExists = await UserBase.findOne({ email });
     if (emailExists)
       return res.status(409).json({ error: "Email ya registrado" });
 
-    const nicknameExists = await UserModel.findOne({ nickname });
+    const nicknameExists = await UserBase.findOne({ nickname });
     if (nicknameExists)
       return res.status(409).json({ error: "Nickname ya registrado" });
 
-    const Discriminators = UserModel.discriminators || {};
+    // Seleccionar modelo según rol
     let ModelToUse;
-
-    if (role === "partner" && Discriminators.partner) {
-      ModelToUse = Discriminators.partner;
-    } else if (role === "foodie" && Discriminators.foodie) {
-      ModelToUse = Discriminators.foodie;
-    } else if (role === "admin" && Discriminators.admin) {
-      ModelToUse = Discriminators.admin;
-    } else {
-      ModelToUse = Discriminators.user || UserModel;
+    switch (role) {
+      case "partner":
+        ModelToUse = partnerUser;
+        break;
+      case "foodie":
+        ModelToUse = foodieUser;
+        break;
+      case "admin":
+        ModelToUse = adminUser;
+        break;
+      default:
+        ModelToUse = UserBase;
     }
 
-    const user = await ModelToUse.create({
+    // Validar campos obligatorios según rol
+    if (role === "foodie" && (age === undefined || age === null)) {
+      return res.status(400).json({ error: "Los foodies deben incluir edad" });
+    }
+    if (role === "partner" && (!address || address.trim() === "")) {
+      return res
+        .status(400)
+        .json({ error: "Los partners deben incluir dirección" });
+    }
+
+    // Preparar datos del usuario
+    const userData = {
       name,
       nickname,
       email,
       password,
       role,
-      address,
-      age,
       ...extras,
-    });
+    };
 
+    // Agregar campos específicos por rol
+    if (role === "foodie") {
+      userData.age = age;
+      userData.posts = [];
+      userData.likedPosts = [];
+      userData.savedPosts = [];
+      userData.sharedPosts = [];
+      userData.savedPartners = [];
+    }
+    if (role === "partner") {
+      userData.address = address;
+      userData.schedule = extras?.schedule || "";
+      userData.tags = extras?.tags || [];
+      userData.posts = [];
+      userData.rating = 0;
+    }
+
+    // Crear usuario usando el modelo correcto
+    const user = await ModelToUse.create(userData);
+
+    // Convertir a objeto plano para respuesta
+    const userObj = user.toObject({ getters: true });
+
+    // Generar token JWT
     const token = signToken({
       id: user._id.toString(),
       email: user.email,
       role: user.role,
     });
+
+    // Responder con token
     res.status(201).json({ token });
   } catch (e) {
     next(e);
   }
 };
 
+//___________________________________________________________________________________________________s
 // POST /auth/login
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const user = await UserModel.findOne({
+    const user = await UserBase.findOne({
       $or: [{ email: email?.toLowerCase() }, { nickname: email }],
     }).select("+password");
     if (!user) return res.status(400).json({ error: "Credenciales inválidas" });

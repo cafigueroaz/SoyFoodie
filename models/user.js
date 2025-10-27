@@ -8,7 +8,9 @@ const partnerSchema = new mongoose.Schema({
   schedule: { type: String },
   tags: [{ type: String }],
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  rating: { type: Number, default: 0 },
 });
+
 export const partnerUser = UserBase.discriminator("partner", partnerSchema);
 
 const adminSchema = new mongoose.Schema({
@@ -19,7 +21,9 @@ export const adminUser = UserBase.discriminator("admin", adminSchema);
 
 const foodieSchema = new mongoose.Schema({
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  likedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
+  sharedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   savedPartners: [{ type: mongoose.Schema.Types.ObjectId, ref: "Partner" }],
   age: { type: Number, required: true },
 });
