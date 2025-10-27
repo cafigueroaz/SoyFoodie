@@ -3,9 +3,7 @@ import UserBase, {
   foodieUser,
   adminUser,
 } from "../models/user.js";
-import { createPost, getPostsByUser } from "../controllers/post.controller.js";
-
-import { getPostsByPartner } from "./partner.controller.js.js";
+import { createPost } from "../controllers/post.controller.js";
 
 function pick(obj, keys) {
   const out = {};
@@ -142,26 +140,15 @@ export const newUserPost = async (req, res, next) => {
 
     req.body.userId = req.user.id;
 
+    // Si se crea un post para otro usuario, marcar origin=tagged
+    if (req.body.userId.toString() !== req.body.partnerId) {
+      req.body.origin = "tagged";
+    } else {
+      req.body.origin = "self";
+    }
+
     return createPost(req, res);
   } catch (err) {
     next(err);
-  }
-};
-
-export const getUserPosts = async (req, res) => {
-  try {
-    return getPostsByUser(req, res);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-};
-
-// Controles Restaurantes
-
-export const getPartnerPosts = async (req, res) => {
-  try {
-    return getPostsByPartner(req, res);
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
   }
 };

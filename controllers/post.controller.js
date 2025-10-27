@@ -1,9 +1,17 @@
-import UserBase, { partnerUser } from "../models/user.js";
 import Post from "../models/post.js";
+import UserBase, { partnerUser } from "../models/user.js";
+import mongoose from "mongoose";
 
 export const createPost = async (req, res) => {
   try {
-    const { partner, type, comment, rating, userId } = req.body;
+    const {
+      partner,
+      type,
+      comment,
+      rating,
+      userId,
+      origin = "self",
+    } = req.body;
 
     if (!userId || !partner || !rating) {
       return res.status(400).json({
@@ -11,11 +19,9 @@ export const createPost = async (req, res) => {
       });
     }
 
-    // Buscar el usuario que hace el post
     const user = await UserBase.findById(userId);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
 
-    // Buscar o crear el partner si no existe
     let partnerDoc = await UserBase.findOne({ name: partner, role: "partner" });
     if (!partnerDoc) {
       partnerDoc = await partnerUser.create({
@@ -28,56 +34,68 @@ export const createPost = async (req, res) => {
       });
     }
 
-    // Crear el post
     const newPost = await Post.create({
-      userId: user._id,
-      nickname: user.nickname, // <- importante
+      userId: partnerDoc._id,
+      nickname: partnerDoc.nickname,
       partner: partnerDoc._id,
       type: type || "reseña",
       comment: comment || "Sin comentarios",
       rating,
+      origin,
+      createdBy: user._id,
     });
 
-    // Agregar el post al usuario
-    if (user.posts) {
-      user.posts.push(newPost._id);
-      await user.save();
+    if (user.role === "foodie" || origin === "self") {
+      if (user.posts) {
+        user.posts.push(newPost._id);
+        await user.save();
+      }
     }
+
+    if (partnerDoc.posts) {
+      partnerDoc.posts.push(newPost._id);
+      await partnerDoc.save();
+    }
+
+    // Devolver post con populate listo para frontend
+    const populatedPost = await Post.findById(newPost._id)
+      .populate("partner", "name nickname role")
+      .populate("createdBy", "name nickname role");
 
     return res.status(201).json({
       message: "Experiencia creada con éxito",
-      newPost,
+      post: populatedPost,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-export const getPostsByUser = async (req, res) => {
+export const getMyPosts = async (req, res) => {
   try {
-    const { nickname } = req.params;
+    const userId = req.user.id;
+    const posts = await Post.find({ userId }).populate(
+      "partner",
+      "name nickname"
+    );
+    return res.json(posts);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
 
-    let user = await User.findOne({
-      nickname: nickname,
-    });
+export const getPostsByUserId = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-    if (!user)
-      return res
-        .status(404)
-        .json({ error: "No encontramos a este foodie en la mesa." });
-
-    let posts;
-
-    if (nickname) {
-      posts = await Post.find({
-        nickname: nickname,
-      });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "ID de usuario no válido" });
     }
 
-    if (!posts)
-      return res.status(404).json({
-        error: "Por ahora, no hay contenido disponible en este perfil foodie.",
-      });
+    const posts = await Post.find({ userId: id }).populate(
+      "partner",
+      "name nickname"
+    );
     return res.json(posts);
   } catch (err) {
     return res.status(500).json({ error: err.message });
