@@ -7,6 +7,7 @@ import {
   adminUpdate,
   adminDelete,
   patchMe,
+  me,
 } from "../controllers/user.controller.js";
 import { requireAuth, requireRole } from "../middlewares/auth.js";
 
@@ -15,6 +16,7 @@ const router = express.Router();
 router.get("/", getUser);
 router.get("/nickname/:nickname", getUser);
 router.get("/email/:email", getUser);
+router.get("/me", requireAuth, me);
 router.patch("/me", requireAuth, patchMe);
 
 // Admin/staff
@@ -23,7 +25,7 @@ router.put("/:id", requireAuth, requireRole("admin"), adminUpdate);
 router.delete("/:id", requireAuth, requireRole("admin"), adminDelete);
 
 //  POST
-router.post("/post/add", newUserPost);
+router.post("/post/add", requireAuth, newUserPost);
 router.get("/post/:nickname", getUserPosts); //Se obtienen los post de un user
 
 // Partner

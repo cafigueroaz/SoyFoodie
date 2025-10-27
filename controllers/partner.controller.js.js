@@ -1,5 +1,4 @@
 import Post from "../models/post.js";
-import User from "../models/user.js";
 import partnerUser from "../models/user.js";
 
 export const getPostsByPartner = async (req, res) => {

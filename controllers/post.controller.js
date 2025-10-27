@@ -1,44 +1,53 @@
+import UserBase, { partnerUser } from "../models/user.js";
 import Post from "../models/post.js";
-import User from "../models/user.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { nickname, partner, tipo, comentario, calificacion } = req.body;
+    const { partner, type, comment, rating, userId } = req.body;
 
-    if (!nickname || !partner || !calificacion) {
+    if (!userId || !partner || !rating) {
       return res.status(400).json({
-        mensaje:
-          "Faltan datos para servir este post: asegúrate de incluir nickname, partner y calificación.",
+        error: "Faltan datos: asegúrate de incluir partner y calificación.",
       });
     }
 
-    let user;
-    user = await User.findOne({
-      nickname: nickname,
+    // Buscar el usuario que hace el post
+    const user = await UserBase.findById(userId);
+    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
+
+    // Buscar o crear el partner si no existe
+    let partnerDoc = await UserBase.findOne({ name: partner, role: "partner" });
+    if (!partnerDoc) {
+      partnerDoc = await partnerUser.create({
+        name: partner,
+        role: "partner",
+        nickname: partner.toLowerCase().replace(/\s+/g, ""),
+        email: partner.toLowerCase().replace(/\s+/g, "") + "@example.com",
+        password: "temporal123",
+        address: "Desconocida",
+      });
+    }
+
+    // Crear el post
+    const newPost = await Post.create({
+      userId: user._id,
+      nickname: user.nickname, // <- importante
+      partner: partnerDoc._id,
+      type: type || "reseña",
+      comment: comment || "Sin comentarios",
+      rating,
     });
 
-    if (user) {
-      const nuevoPost = await Post.create({
-        nickname,
-        partner,
-        calificacion,
-        tipo,
-        comentario,
-      });
-
-      user.posts.push(nuevoPost._id);
+    // Agregar el post al usuario
+    if (user.posts) {
+      user.posts.push(newPost._id);
       await user.save();
-
-      return res.status(201).json({
-        mensaje:
-          "¡Tu experiencia fue servida con éxito! 🎉🍽️ Gracias por compartir en SoyFoodie.",
-        nuevoPost,
-      });
-    } else {
-      return res
-        .status(404)
-        .json({ error: "No encontramos a este foodie en la mesa." });
     }
+
+    return res.status(201).json({
+      message: "Experiencia creada con éxito",
+      newPost,
+    });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

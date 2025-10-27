@@ -134,11 +134,17 @@ export const adminDelete = async (req, res, next) => {
 
 // Controles postear publicaciones //
 
-export const newUserPost = async (req, res) => {
+export const newUserPost = async (req, res, next) => {
   try {
+    if (!req.user?.id) {
+      return res.status(401).json({ error: "No autorizado" });
+    }
+
+    req.body.userId = req.user.id;
+
     return createPost(req, res);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 

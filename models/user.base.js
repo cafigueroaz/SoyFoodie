@@ -24,7 +24,7 @@ const base = new mongoose.Schema(
     password: { type: String, required: true, minlength: 8, select: false }, // select:false = no sale por defecto
     role: {
       type: String,
-      enum: ["partner", "foodie"],
+      enum: ["partner", "foodie", "admin"],
       default: "foodie",
       index: true,
     },

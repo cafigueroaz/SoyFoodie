@@ -5,18 +5,18 @@ const postSchema = new Schema(
   {
     nickname: { type: String, required: true, lowercase: true },
     partner: { type: String, required: true, lowercase: true },
-    tipo: {
+    type: {
       type: String,
       enum: ["video", "foto", "reseña"],
       default: "reseña",
       required: true,
     },
 
-    comentario: { type: String, default: "Sin comentarios" },
-    calificacion: { type: Number, min: 1, max: 5, required: true },
-    // likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    // guardados: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    // compartido: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    comment: { type: String, default: "Sin comentarios" },
+    rating: { type: Number, min: 1, max: 5, required: true },
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    saved: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    shared: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );
