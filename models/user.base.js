@@ -12,8 +12,8 @@ export function normalizeKey(str = "") {
 
 const base = new mongoose.Schema(
   {
-    nombre: { type: String, required: true, trim: true },
-    nombreKey: { type: String, index: true }, // clave normalizada para búsqueda
+    name: { type: String, required: true, trim: true },
+    nameKey: { type: String, index: true }, // clave normalizada para búsqueda
     nickname: { type: String, trim: true, required: true },
     email: {
       type: String,
@@ -24,7 +24,7 @@ const base = new mongoose.Schema(
     password: { type: String, required: true, minlength: 8, select: false }, // select:false = no sale por defecto
     role: {
       type: String,
-      enum: ["admin", "restaurante", "foodie"],
+      enum: ["partner", "foodie"],
       default: "foodie",
       index: true,
     },
@@ -55,8 +55,8 @@ base.pre("save", async function (next) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
   }
-  if (this.isModified("nombre")) {
-    this.nombreKey = normalizeKey(this.nombre);
+  if (this.isModified("name")) {
+    this.nameKey = normalizeKey(this.name);
   }
   next();
 });

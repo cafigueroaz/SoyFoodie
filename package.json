@@ -1,7 +1,7 @@
 {
   "name": "bootstrap",
   "version": "1.0.0",
-  "description": "SoyFoodie es una página web enfocada en la experiencia gastronómica, donde los usuarios pueden descubrir, guardar y compartir recomendaciones reales de comida cerca de ellos.",
+  "description": "SoyFoodie es una página web enfocada en la experiencia gastronómica, donde los users pueden descubrir, guardar y compartir recomendaciones reales de comida cerca de ellos.",
   "main": "main.js",
   "type": "module",
   "scripts": {

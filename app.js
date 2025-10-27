@@ -6,7 +6,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
 import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/usuarioRoutes.js";
+import userRoutes from "./routes/user.routes.js";
 
 const app = express();
 
@@ -30,5 +30,8 @@ app.use("/users", userRoutes);
 app.get("/health", (_req, res) => {
   res.json({ ok: true, message: "Servidor funcionando ✅" });
 });
+
+// // 🚨 Middleware de errores al final
+// app.use(errorHandler);
 
 export default app;

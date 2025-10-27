@@ -1,33 +1,33 @@
 import Post from "../models/post.js";
-import Usuario from "../models/usuario.js";
+import User from "../models/user.js";
 
-export const crearPost = async (req, res) => {
+export const createPost = async (req, res) => {
   try {
-    const { nickname, restaurante, tipo, comentario, calificacion } = req.body;
+    const { nickname, partner, tipo, comentario, calificacion } = req.body;
 
-    if (!nickname || !restaurante || !calificacion) {
+    if (!nickname || !partner || !calificacion) {
       return res.status(400).json({
         mensaje:
-          "Faltan datos para servir este post: asegúrate de incluir nickname, restaurante y calificación.",
+          "Faltan datos para servir este post: asegúrate de incluir nickname, partner y calificación.",
       });
     }
 
-    let usuario;
-    usuario = await Usuario.findOne({
+    let user;
+    user = await User.findOne({
       nickname: nickname,
     });
 
-    if (usuario) {
+    if (user) {
       const nuevoPost = await Post.create({
         nickname,
-        restaurante,
+        partner,
         calificacion,
         tipo,
         comentario,
       });
 
-      usuario.posts.push(nuevoPost._id);
-      await usuario.save();
+      user.posts.push(nuevoPost._id);
+      await user.save();
 
       return res.status(201).json({
         mensaje:
@@ -44,15 +44,15 @@ export const crearPost = async (req, res) => {
   }
 };
 
-export const getPostsporUsuario = async (req, res) => {
+export const getPostsByUser = async (req, res) => {
   try {
     const { nickname } = req.params;
 
-    let usuario = await Usuario.findOne({
+    let user = await User.findOne({
       nickname: nickname,
     });
 
-    if (!usuario)
+    if (!user)
       return res
         .status(404)
         .json({ error: "No encontramos a este foodie en la mesa." });

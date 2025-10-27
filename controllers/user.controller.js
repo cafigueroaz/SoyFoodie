@@ -1,13 +1,10 @@
-import User from "../models/usuario.js"; // tu modelo mongoose
-import {
-  crearPost,
-  getPostsporUsuario,
-} from "../controllers/posts.controllers.js";
+import User from "../models/user.js"; // tu modelo mongoose
+import { createPost, getPostsByUser } from "../controllers/post.controller.js";
 
-import { getPostsporRestaurante } from "../controllers/restaurantes.controllers.js";
+import { getPostsByPartner } from "./partner.controller.js.js";
 
-/** GET /usuarios/nickname o email */
-export const getUsuario = async (req, res) => {
+/** GET /users/nickname o email */
+export const getUser = async (req, res) => {
   try {
     const { nickname, email } = req.query;
 
@@ -17,46 +14,46 @@ export const getUsuario = async (req, res) => {
       });
     }
 
-    let usuario;
+    let user;
 
     if (nickname) {
-      usuario = await User.findOne({
+      user = await User.findOne({
         nickname: nickname,
       });
     } else if (email) {
-      usuario = await User.findOne({ email: email });
+      user = await User.findOne({ email: email });
     }
 
-    if (!usuario)
+    if (!user)
       return res
         .status(404)
         .json({ error: "No encontramos a este foodie en la mesa." });
 
-    return res.json(usuario);
+    return res.json(user);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-export const crearUsuario = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
-    const { nombre, nickname, email, password, rol } = req.body;
+    const { name, nickname, email, password, rol } = req.body;
 
-    if (!nombre || !nickname || !email || !password) {
+    if (!name || !nickname || !email || !password) {
       return res.status(400).json({
         mensaje:
-          "Receta incompleta: nombre, nickname, email y password son obligatorios.",
+          "Receta incompleta: name, nickname, email y password son obligatorios.",
       });
     }
 
-    const validarEmail = await User.findOne({ email });
-    const validarNickname = await User.findOne({ nickname });
-    if (validarEmail || validarNickname) {
-      if (validarEmail) {
+    const validateEmail = await User.findOne({ email });
+    const validateNickname = await User.findOne({ nickname });
+    if (validateEmail || validateNickname) {
+      if (validateEmail) {
         return res
           .status(409)
           .json({ mensaje: "Ese email ya está reservado en SoyFoodie." });
-      } else if (validarNickname) {
+      } else if (validateNickname) {
         return res.status(409).json({
           mensaje:
             "Ese nickname ya fue elegido por otro foodie. ¡Escoge uno único!",
@@ -64,23 +61,23 @@ export const crearUsuario = async (req, res) => {
       }
     }
 
-    const nuevoUsuario = await User.create({
-      nombre,
+    const newUser = await User.create({
+      name,
       nickname,
       email,
       password,
       rol,
     });
-    return res.status(201).json(nuevoUsuario);
+    return res.status(201).json(newUser);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-export const actualizarUsuario = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { nickname, email } = req.query;
-    const { nombre, nicknameNuevo, emailNuevo, password, rol } = req.body;
+    const { name, newNickname, newEmail, password, rol } = req.body;
 
     if (!nickname && !email) {
       return res.status(400).json({
@@ -90,19 +87,19 @@ export const actualizarUsuario = async (req, res) => {
     }
 
     const update = {};
-    if (nombre !== undefined) update.nombre = nombre;
-    if (emailNuevo !== undefined) update.email = emailNuevo;
+    if (name !== undefined) update.name = name;
+    if (newEmail !== undefined) update.email = newEmail;
     if (password !== undefined) update.password = password;
-    if (nicknameNuevo !== undefined) update.nickname = nicknameNuevo;
+    if (newNickname !== undefined) update.nickname = newNickname;
     if (rol !== undefined) update.rol = rol;
 
-    let filtro = {};
-    if (email) filtro.email = email.toLowerCase();
-    if (nickname) filtro.nickname = nickname.toLowerCase();
+    let filter = {};
+    if (email) filter.email = email.toLowerCase();
+    if (nickname) filter.nickname = nickname.toLowerCase();
 
-    const usuario = await User.findOneAndUpdate(filtro, update, { new: true });
+    const user = await User.findOneAndUpdate(filter, update, { new: true });
 
-    if (!usuario) {
+    if (!user) {
       return res
         .status(404)
         .json({ mensaje: "No encontramos este perfil foodie en la carta." });
@@ -110,15 +107,15 @@ export const actualizarUsuario = async (req, res) => {
 
     return res.json({
       mensaje: "Perfil actualizado. Tu experiencia foodie está al día.",
-      usuario,
+      user,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-/** DELETE /usuarios/:nombre */
-export const eliminarUsuario = async (req, res) => {
+/** DELETE /users/:name */
+export const deleteUser = async (req, res) => {
   try {
     const { nickname, email } = req.query;
 
@@ -128,19 +125,19 @@ export const eliminarUsuario = async (req, res) => {
       });
     }
 
-    let filtro = {};
-    if (email) filtro.email = email.toLowerCase();
-    if (nickname) filtro.nickname = nickname.toLowerCase();
+    let filter = {};
+    if (email) filter.email = email.toLowerCase();
+    if (nickname) filter.nickname = nickname.toLowerCase();
 
-    const eliminado = await User.findOneAndDelete(filtro);
+    const deleted = await User.findOneAndDelete(filter);
 
-    if (!eliminado)
+    if (!deleted)
       return res.status(404).json({
         mensaje: "No encontramos a este foodie en la mesa. Nada que eliminar.",
       });
     return res.json({
-      mensaje: "Foodie eliminado con éxito de la comunidad.",
-      usuario: eliminado,
+      mensaje: "Foodie deleted con éxito de la comunidad.",
+      user: deleted,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -149,17 +146,17 @@ export const eliminarUsuario = async (req, res) => {
 
 // Controles postear publicaciones //
 
-export const usuarioNuevoPost = async (req, res) => {
+export const newUserPost = async (req, res) => {
   try {
-    return crearPost(req, res);
+    return createPost(req, res);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
 
-export const usuarioPosts = async (req, res) => {
+export const getUserPosts = async (req, res) => {
   try {
-    return getPostsporUsuario(req, res);
+    return getPostsByUser(req, res);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -167,9 +164,9 @@ export const usuarioPosts = async (req, res) => {
 
 // Controles Restaurantes
 
-export const restaurantePosts = async (req, res) => {
+export const getPartnerPosts = async (req, res) => {
   try {
-    return getPostsporRestaurante(req, res);
+    return getPostsByPartner(req, res);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

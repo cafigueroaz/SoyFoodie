@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const postSchema = new Schema(
   {
     nickname: { type: String, required: true, lowercase: true },
-    restaurante: { type: String, required: true, lowercase: true },
+    partner: { type: String, required: true, lowercase: true },
     tipo: {
       type: String,
       enum: ["video", "foto", "reseña"],
@@ -14,9 +14,9 @@ const postSchema = new Schema(
 
     comentario: { type: String, default: "Sin comentarios" },
     calificacion: { type: Number, min: 1, max: 5, required: true },
-    // likes: [{ type: Schema.Types.ObjectId, ref: "Usuario" }],
-    // guardados: [{ type: Schema.Types.ObjectId, ref: "Usuario" }],
-    // compartido: [{ type: Schema.Types.ObjectId, ref: "Usuario" }],
+    // likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    // guardados: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    // compartido: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

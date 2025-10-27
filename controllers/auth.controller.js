@@ -1,14 +1,13 @@
 // controllers/auth.controller.js (ESM)
-import UserModel from "../models/usuario.js"; // Modelo base
+import UserModel from "../models/user.js"; // Modelo base
 import { signToken } from "../lib/jwt.js";
 
 // POST /auth/register
 export const register = async (req, res, next) => {
   try {
-    const { nombre, nickname, email, password, role, direccion, edad } =
-      req.body;
+    const { name, nickname, email, password, role, address, age } = req.body;
 
-    // Verificar si el correo ya existe
+    // Verificar si el email ya existe
     const emailExists = await UserModel.findOne({ email });
     if (emailExists)
       return res.status(409).json({ error: "Email ya registrado" });
@@ -20,24 +19,25 @@ export const register = async (req, res, next) => {
 
     // Manejar discriminadores
     const Discriminators = UserModel.discriminators || {};
-    const ModelToUse =
-      role === "admin" && Discriminators.admin
-        ? Discriminators.admin
-        : role === "restaurante" && Discriminators.restaurante
-        ? Discriminators.restaurante
-        : role === "foodie" && Discriminators.foodie
-        ? Discriminators.foodie
-        : Discriminators.user || UserModel;
+   
 
-    // Crear el usuario correspondiente según el rol
+    // Crear el user corre let ModelToUse;
+
+    if (role === "partner" && Discriminators.partner) {
+      ModelToUse = Discriminators.partner;
+    } else if (role === "foodie" && Discriminators.foodie) {
+      ModelToUse = Discriminators.foodie;
+    } else {
+      ModelToUse = Discriminators.user || UserModel;
+    }spondiente según el rol
     const user = await ModelToUse.create({
-      nombre,
+      name,
       nickname,
       email,
       password,
       role,
-      direccion,
-      edad,
+      address,
+      age,
     });
 
     // Generar token JWT
@@ -57,7 +57,7 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Buscar el usuario e incluir el campo de password (oculto por defecto)
+    // Buscar el user e incluir el campo de password (oculto por defecto)
     const user = await UserModel.findOne({ email }).select("+password");
     if (!user) return res.status(400).json({ error: "Credenciales inválidas" });
 
