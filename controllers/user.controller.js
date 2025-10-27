@@ -1,37 +1,78 @@
 import User from "../models/user.js"; // tu modelo mongoose
+import UserBase, { partnerUser, foodieUser } from "../models/user.js";
 import { createPost, getPostsByUser } from "../controllers/post.controller.js";
-
+import { normalizeKey } from "../models/user.base.js";
 import { getPostsByPartner } from "./partner.controller.js.js";
 
-/** GET /users/nickname o email */
-export const getUser = async (req, res) => {
+function pick(obj, keys) {
+  const out = {};
+  for (const k of keys) if (k in obj) out[k] = obj[k];
+  return out;
+
+  const SELF_FIELDS = [
+    "name",
+    "age",
+    "password",
+    "posts",
+    "favorites",
+    "savedPartners",
+    "tags",
+    "schedule",
+    "address",
+  ];
+}
+
+export const me = async (req, res, next) => {
   try {
-    const { nickname, email } = req.query;
+    const user = await UserBase.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: "No encontrado" });
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const patchMe = async (req, res, next) => {
+  try {
+    const fields = pick(req.body, SELF_FIELDS);
+    const user = await UserBase.findById(req.user.id).select("+password");
+    if (!user) return res.status(404).json({ error: "No encontrado" });
+
+    Object.assign(user, fields);
+    await user.save();
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+};
+
+/** GET /users/nickname o email */
+export const getUser = async (req, res, next) => {
+  try {
+    const nickname = req.params.nickname || req.query.nickname;
+    const email = req.params.email || req.query.email;
 
     if (!nickname && !email) {
       return res.status(400).json({
-        mensaje: "Debes enviar un nickname o email para encontrar a tu foodie.",
+        error: "Debes enviar un nickname o email para encontrar al foodie.",
       });
     }
 
     let user;
 
     if (nickname) {
-      user = await User.findOne({
-        nickname: nickname,
-      });
+      user = await UserBase.findOne({ nickname });
     } else if (email) {
-      user = await User.findOne({ email: email });
+      user = await UserBase.findOne({ email });
     }
 
-    if (!user)
-      return res
-        .status(404)
-        .json({ error: "No encontramos a este foodie en la mesa." });
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
 
     return res.json(user);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 

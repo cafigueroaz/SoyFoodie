@@ -11,10 +11,12 @@ import {
 
 const router = express.Router();
 
-router.get("/", getUser); // GET /users/ por nickname o email
-router.post("/", createUser); // POST /users
-router.put("/", updateUser); // PUT /users/nickname o email
-router.delete("/", deleteUser); // DELETE /users/nickname o email
+router.get("/", getUser);
+router.get("/nickname/:nickname", getUser);
+router.get("/email/:email", getUser);
+router.post("/", createUser); // POST /usuarios
+router.put("/", updateUser); // PUT /usuarios/nickname o email
+router.delete("/", deleteUser); // DELETE /usuarios/nickname o email
 
 //  POST
 router.post("/post/add", newUserPost);
