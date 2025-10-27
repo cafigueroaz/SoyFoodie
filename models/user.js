@@ -11,6 +11,12 @@ const partnerSchema = new mongoose.Schema({
 });
 export const partnerUser = UserBase.discriminator("partner", partnerSchema);
 
+const adminSchema = new mongoose.Schema({
+  permisos: [{ type: String }], // ej. ['manage_users',   'manage_products']
+  adminNotes: { type: String },
+});
+export const adminUser = UserBase.discriminator("admin", adminSchema);
+
 const foodieSchema = new mongoose.Schema({
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],

@@ -22,6 +22,8 @@ export const register = async (req, res, next) => {
       ModelToUse = Discriminators.partner;
     } else if (role === "foodie" && Discriminators.foodie) {
       ModelToUse = Discriminators.foodie;
+    } else if (role === "admin" && Discriminators.admin) {
+      ModelToUse = Discriminators.admin;
     } else {
       ModelToUse = Discriminators.user || UserModel;
     }
