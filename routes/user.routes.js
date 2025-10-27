@@ -30,7 +30,7 @@ router.delete("/:id", requireAuth, requireRole("admin"), adminDelete);
 //  POST
 router.post("/post/add", requireAuth, newUserPost);
 router.get("/post/me", requireAuth, getMyPosts); //mis posts
-router.get("/users/:id/posts", requireAuth, getPostsByUserId); //post de otro usuario por id
+router.get("/:id/posts", requireAuth, getPostsByUserId); //post de otro usuario por id
 
 router.post("/post/interact", requireAuth, interactPost);
 
