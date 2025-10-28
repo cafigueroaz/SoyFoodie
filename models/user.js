@@ -26,6 +26,7 @@ const foodieSchema = new mongoose.Schema({
   sharedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
   savedPartners: [{ type: mongoose.Schema.Types.ObjectId, ref: "Partner" }],
   age: { type: Number, required: true },
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 export const foodieUser = UserBase.discriminator("foodie", foodieSchema);
 

@@ -28,6 +28,7 @@ const base = new mongoose.Schema(
       default: "foodie",
       index: true,
     },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,
