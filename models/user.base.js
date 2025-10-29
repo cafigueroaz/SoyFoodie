@@ -15,6 +15,7 @@ const base = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     nameKey: { type: String, index: true }, // clave normalizada para búsqueda
     nickname: { type: String, trim: true, required: true },
+    description: { type: String, trim: true },
     email: {
       type: String,
       required: true,

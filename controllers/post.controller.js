@@ -1,74 +1,82 @@
-import Post from "../models/post.js";
-import UserBase, { partnerUser } from "../models/user.js";
 import mongoose from "mongoose";
-
+import Post from "../models/Post.js";
+import UserBase, { partnerUser } from "../models/user.js";
 //___________________________________________________________________________________________________
 export const createPost = async (req, res) => {
   try {
     const {
       partner,
-      type,
+      mediaUrls = [],
       comment,
       rating,
       userId,
       origin = "self",
     } = req.body;
 
-    if (!userId || !partner || !rating) {
+    if (!userId || !rating) {
       return res.status(400).json({
-        error: "Faltan datos: asegúrate de incluir partner y calificación.",
+        error:
+          "Faltan datos: asegúrate de incluir el usuario y la calificación.",
       });
     }
 
     const user = await UserBase.findById(userId);
     if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
 
-    let partnerDoc = await UserBase.findOne({ name: partner, role: "partner" });
-    if (!partnerDoc) {
-      partnerDoc = await partnerUser.create({
-        name: partner,
-        role: "partner",
-        nickname: partner.toLowerCase().replace(/\s+/g, ""),
-        email: partner.toLowerCase().replace(/\s+/g, "") + "@example.com",
-        password: "temporal123",
-        address: "Desconocida",
-      });
-    }
-
-    const newPost = await Post.create({
-      userId: partnerDoc._id,
-      nickname: partnerDoc.nickname,
-      partner: partnerDoc._id,
-      type: type || "reseña",
-      comment: comment || "Sin comentarios",
-      rating,
-      origin,
-      createdBy: user._id,
-    });
-
-    if ((user.role === "foodie" && origin === "self") || origin === "tagged") {
-      if (user.posts) {
-        user.posts.push(newPost._id);
-        await user.save();
+    // Buscar o crear el partner (restaurante)
+    let partnerDoc = null;
+    if (partner) {
+      partnerDoc = await UserBase.findOne({ name: partner, role: "partner" });
+      if (!partnerDoc) {
+        partnerDoc = await partnerUser.create({
+          name: partner,
+          role: "partner",
+          nickname: partner.toLowerCase().replace(/\s+/g, ""),
+          email: partner.toLowerCase().replace(/\s+/g, "") + "@sincorreo.com",
+          password: "12345678",
+          address: "Desconocida",
+        });
       }
     }
 
-    if (partnerDoc.posts) {
+    // Crear la publicación
+    const newPost = await Post.create({
+      createdBy: user._id,
+      nickname: user.nickname,
+      partner: partnerDoc?._id || null,
+
+      comment: comment || "Sin comentarios",
+      rating,
+      origin,
+      mediaUrls,
+    });
+
+    // Asociar el post al usuario foodie
+    if ((user.role === "foodie" && origin === "self") || origin === "tagged") {
+      if (!user.posts) user.posts = [];
+      user.posts.push(newPost._id);
+      await user.save();
+    }
+
+    // Si el post menciona un partner, actualizar su promedio de rating
+    if (partnerDoc) {
+      if (!partnerDoc.posts) partnerDoc.posts = [];
       partnerDoc.posts.push(newPost._id);
 
-      const posts = await Post.find({ _id: { $in: partnerDoc.posts } });
+      const posts = await Post.find({ partner: partnerDoc._id });
       const total = posts.reduce((acc, p) => acc + (p.rating || 0), 0);
       partnerDoc.rating = posts.length ? total / posts.length : 0;
 
       await partnerDoc.save();
     }
 
+    // Retornar con relaciones completas
     const populatedPost = await Post.findById(newPost._id)
       .populate("partner", "name nickname role rating")
       .populate("createdBy", "name nickname role");
 
     return res.status(201).json({
-      message: "Experiencia creada con éxito",
+      message: "Experiencia creada con éxito 🎉",
       post: populatedPost,
     });
   } catch (err) {

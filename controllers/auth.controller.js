@@ -73,6 +73,7 @@ export const register = async (req, res, next) => {
       userData.savedPartners = [];
       userData.following = [];
       userData.followers = [];
+      userData.description = "";
     }
     if (role === "partner") {
       userData.address = address;
@@ -81,6 +82,7 @@ export const register = async (req, res, next) => {
       userData.posts = [];
       userData.rating = 0;
       userData.followers = [];
+      userData.description = "";
     }
 
     // Crear usuario usando el modelo correcto
